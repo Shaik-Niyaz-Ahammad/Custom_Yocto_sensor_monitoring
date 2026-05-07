@@ -1,0 +1,114 @@
+root@beaglebone-yocto:~# systemctl status sensor_app.service
+* sensor_app.service - BME280 Sensor Monitoring Service
+     Loaded: loaded (8;;file://beaglebone-yocto/usr/lib/systemd/system/sensor_app.service/usr/lib/systemd/system/sensor_app.ser)
+     Active: active (running) since Thu 2025-05-29 18:48:37 UTC; 10 months 23 days ago
+   Main PID: 182 (sensor_app)
+      Tasks: 1 (limit: 1122)
+     Memory: 128.0K (peak: 876.0K)
+        CPU: 93ms
+     CGroup: /system.slice/sensor_app.service
+             `-182 /usr/bin/sensor_app
+
+Apr 22 16:45:12 beaglebone-yocto sensor_app[182]: [2026-04-22 16:45:12] Te...3 %
+Apr 22 16:45:22 beaglebone-yocto sensor_app[182]: [2026-04-22 16:45:22] Te...4 %
+Apr 22 16:45:32 beaglebone-yocto sensor_app[182]: [2026-04-22 16:45:32] Te...9 %
+Apr 22 16:45:42 beaglebone-yocto sensor_app[182]: [2026-04-22 16:45:42] Te...0 %
+Apr 22 16:45:52 beaglebone-yocto sensor_app[182]: [2026-04-22 16:45:52] Te...5 %
+Apr 22 16:46:02 beaglebone-yocto sensor_app[182]: [2026-04-22 16:46:02] Te...4 %
+Apr 22 16:46:12 beaglebone-yocto sensor_app[182]: [2026-04-22 16:46:12] Te...8 %
+Apr 22 16:46:22 beaglebone-yocto sensor_app[182]: [2026-04-22 16:46:22] Te...7 %
+Apr 22 16:46:32 beaglebone-yocto sensor_app[182]: [2026-04-22 16:46:32] Te...8 %
+Apr 22 16:46:42 beaglebone-yocto sensor_app[182]: [2026-04-22 16:46:42] Te...1 %
+Hint: Some lines were ellipsized, use -l to show in full.
+root@beaglebone-yocto:~# tail -n 10 /var/log/sensor.log
+[2026-04-22 16:45:12] Temp: 22.66 C | Pressure: 1028.43 hPa | Humidity: 50.93 %
+[2026-04-22 16:45:22] Temp: 22.65 C | Pressure: 1028.40 hPa | Humidity: 50.84 %
+[2026-04-22 16:45:32] Temp: 22.66 C | Pressure: 1028.46 hPa | Humidity: 50.79 %
+[2026-04-22 16:45:42] Temp: 22.67 C | Pressure: 1028.48 hPa | Humidity: 50.80 %
+[2026-04-22 16:45:52] Temp: 22.67 C | Pressure: 1028.48 hPa | Humidity: 50.75 %
+[2026-04-22 16:46:02] Temp: 22.66 C | Pressure: 1028.44 hPa | Humidity: 50.74 %
+[2026-04-22 16:46:12] Temp: 22.67 C | Pressure: 1028.45 hPa | Humidity: 50.78 %
+[2026-04-22 16:46:22] Temp: 22.70 C | Pressure: 1028.42 hPa | Humidity: 50.77 %
+[2026-04-22 16:46:32] Temp: 22.68 C | Pressure: 1028.42 hPa | Humidity: 50.78 %
+[2026-04-22 16:46:42] Temp: 22.69 C | Pressure: 1028.43 hPa | Humidity: 50.71 %
+root@beaglebone-yocto:~# journalctl -u sensor_app.service -n 10
+Apr 22 16:45:22 beaglebone-yocto sensor_app[182]: [2026-04-22 16:45:22] Temp: 22.65 C | Pressure: 1028.40 hPa | Humidity: 50.84%
+Apr 22 16:45:32 beaglebone-yocto sensor_app[182]: [2026-04-22 16:45:32] Temp: 22.66 C | Pressure: 1028.46 hPa | Humidity: 50.79%
+Apr 22 16:45:42 beaglebone-yocto sensor_app[182]: [2026-04-22 16:45:42] Temp: 22.67 C | Pressure: 1028.48 hPa | Humidity: 50.80%
+Apr 22 16:45:52 beaglebone-yocto sensor_app[182]: [2026-04-22 16:45:52] Temp: 22.67 C | Pressure: 1028.48 hPa | Humidity: 50.75%
+Apr 22 16:46:02 beaglebone-yocto sensor_app[182]: [2026-04-22 16:46:02] Temp: 22.66 C | Pressure: 1028.44 hPa | Humidity: 50.74%
+Apr 22 16:46:12 beaglebone-yocto sensor_app[182]: [2026-04-22 16:46:12] Temp: 22.67 C | Pressure: 1028.45 hPa | Humidity: 50.78%
+Apr 22 16:46:22 beaglebone-yocto sensor_app[182]: [2026-04-22 16:46:22] Temp: 22.70 C | Pressure: 1028.42 hPa | Humidity: 50.77%
+Apr 22 16:46:32 beaglebone-yocto sensor_app[182]: [2026-04-22 16:46:32] Temp: 22.68 C | Pressure: 1028.42 hPa | Humidity: 50.78%
+Apr 22 16:46:42 beaglebone-yocto sensor_app[182]: [2026-04-22 16:46:42] Temp: 22.69 C | Pressure: 1028.43 hPa | Humidity: 50.71%
+Apr 22 16:46:52 beaglebone-yocto sensor_app[182]: [2026-04-22 16:46:52] Temp: 22.71 C | Pressure: 1028.49 hPa | Humidity: 50.64%
+root@beaglebone-yocto:~# cat /etc/sensor_app.version
+1.2
+root@beaglebone-yocto:~# /usr/bin/update_sensor.sh
+Checking for OTA update...
+Connecting to 192.168.7.1:8000 (192.168.7.1:8000)
+saving to '/tmp/version.txt'
+version.txt          100% |********************************|     4  0:00:00 ETA
+'/tmp/version.txt' saved
+Current version: 1.2
+Available version: 1.3
+Downloading new binary...
+Connecting to 192.168.7.1:8000 (192.168.7.1:8000)
+saving to '/tmp/sensor_app'
+sensor_app           100% |********************************| 22576  0:00:00 ETA
+'/tmp/sensor_app' saved
+Downloading checksum...
+Connecting to 192.168.7.1:8000 (192.168.7.1:8000)
+saving to '/tmp/sensor_app.sha256'
+sensor_app.sha256    100% |********************************|    77  0:00:00 ETA
+'/tmp/sensor_app.sha256' saved
+sensor_app: OK
+Downloading new config...
+Connecting to 192.168.7.1:8000 (192.168.7.1:8000)
+saving to '/tmp/sensor_app.conf'
+sensor_app.conf      100% |********************************|    48  0:00:00 ETA
+'/tmp/sensor_app.conf' saved
+Stopping service...
+Starting service...
+OTA update successful
+root@beaglebone-yocto:~# cat /etc/sensor_app.version
+1.3
+
+root@beaglebone-yocto:~# systemctl status update_sensor.timer
+* update_sensor.timer - Periodic OTA update check for sensor app
+     Loaded: loaded (8;;file://beaglebone-yocto/usr/lib/systemd/system/update_sensor.timer/usr/lib/systemd/system/update_sensor)
+     Active: active (running) since Thu 2025-05-29 18:48:36 UTC; 10 months 23 days ago
+    Trigger: n/a
+   Triggers: * update_sensor.service
+
+May 29 18:48:36 beaglebone-yocto systemd[1]: Started Periodic OTA update c...pp.
+Hint: Some lines were ellipsized, use -l to show in full.
+root@beaglebone-yocto:~# systemctl list-timers | grep update_sensor
+Wed 2026-04-22 16:52:51 UTC 4min 46s Wed 2026-04-22 16:47:51 UTC 13s ago update_sensor.timer          update_sensor.service
+root@beaglebone-yocto:~# which sensor_app
+/usr/bin/sensor_app
+root@beaglebone-yocto:~# which update_sensor.sh
+/usr/bin/update_sensor.sh
+root@beaglebone-yocto:~# systemctl status sensor_app.service
+* sensor_app.service - BME280 Sensor Monitoring Service
+     Loaded: loaded (8;;file://beaglebone-yocto/usr/lib/systemd/system/sensor_app.service/usr/lib/systemd/system/sensor_app.ser)
+     Active: active (running) since Thu 2025-05-29 18:48:37 UTC; 10 months 23 days ago
+   Main PID: 182 (sensor_app)
+      Tasks: 1 (limit: 1122)
+     Memory: 128.0K (peak: 876.0K)
+        CPU: 100ms
+     CGroup: /system.slice/sensor_app.service
+             `-182 /usr/bin/sensor_app
+
+Apr 22 16:47:02 beaglebone-yocto sensor_app[182]: [2026-04-22 16:47:02] Te...0 %
+Apr 22 16:47:12 beaglebone-yocto sensor_app[182]: [2026-04-22 16:47:12] Te...0 %
+Apr 22 16:47:22 beaglebone-yocto sensor_app[182]: [2026-04-22 16:47:22] Te...5 %
+Apr 22 16:47:32 beaglebone-yocto sensor_app[182]: [2026-04-22 16:47:32] Te...1 %
+Apr 22 16:47:42 beaglebone-yocto sensor_app[182]: [2026-04-22 16:47:42] Te...7 %
+Apr 22 16:47:52 beaglebone-yocto sensor_app[182]: [2026-04-22 16:47:52] Te...3 %
+Apr 22 16:48:02 beaglebone-yocto sensor_app[182]: [2026-04-22 16:48:02] Te...2 %
+Apr 22 16:48:12 beaglebone-yocto sensor_app[182]: [2026-04-22 16:48:12] Te...6 %
+Apr 22 16:48:22 beaglebone-yocto sensor_app[182]: [2026-04-22 16:48:22] Te...4 %
+Apr 22 16:48:32 beaglebone-yocto sensor_app[182]: [2026-04-22 16:48:32] Te...4 %
+Hint: Some lines were ellipsized, use -l to show in full.
+
